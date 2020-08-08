@@ -14,7 +14,7 @@ services:
 
   unifi:
     container_name: unifi
-    image: "brett/unifi:5.10.25"
+    image: "brett/unifi:5.13.32"
     depends_on:
       - mongo
     logging:
