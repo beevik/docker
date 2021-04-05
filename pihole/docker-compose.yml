@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole
+    restart: always
+    logging:
+      driver: "json-file"
+    env_file:
+      - pihole.env
+    networks:
+      - pihole
+    volumes:
+      - conf:/etc/pihole
+      - dnsmasq:/etc/dnsmasq.d
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+
+  nginx:
+    container_name: pihole_proxy
+    image: nginx
+    restart: always
+    logging:
+      driver: "json-file"
+    networks:
+      - pihole
+    volumes:
+      - /var/services/homes/brett/pihole/nginx/default.conf:/etc/nginx/conf.d/default.conf:rw
+      - /var/services/homes/brett/cert/pihole:/etc/nginx/cert:ro
+    ports:
+      - "8088:8088/tcp"
+
+volumes:
+  conf:
+  dnsmasq:
+
+networks:
+  pihole:
