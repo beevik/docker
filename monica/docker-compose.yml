@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+    app:
+      image: monica:fpm
+      container_name: monica_app
+      depends_on:
+        - db
+      environment:
+        - APP_KEY=<random 32 chars>
+        - DB_HOST=db
+      networks:
+        - monica
+      volumes:
+        - data:/var/www/html/storage
+      restart: always
+
+    proxy:
+      build: ./proxy
+      container_name: monica_proxy
+      ports:
+        - 8089:443
+      depends_on:
+        - app
+      networks:
+        - monica
+      volumes:
+        - /home/brett/cert:/etc/nginx/cert:ro
+        - data:/var/www/html/storage:ro
+      restart: always
+
+    db:
+      image: mysql:5.7
+      container_name: monica_db
+      environment:
+        - MYSQL_RANDOM_ROOT_PASSWORD=true
+        - MYSQL_DATABASE=monica
+        - MYSQL_USER=homestead
+        - MYSQL_PASSWORD=secret
+      networks:
+        - monica
+      volumes:
+        - mysql:/var/lib/mysql
+      restart: always
+
+volumes:
+  data:
+  mysql:
+
+networks:
+  monica:
