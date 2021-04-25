@@ -17,8 +17,8 @@ RUN set -x \
 RUN set -x \
 	&& mkdir -p /usr/local/src \
 	&& cd /usr/local/src \
-	&& wget -q ftp://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz \
-	&& wget -q ftp://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.gz \
+	&& wget -q https://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz \
+	&& wget -q https://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.gz \
 	&& tar zxf binutils-${BINUTILS_VERSION}.tar.gz \
 	&& tar zxf gcc-${GCC_VERSION}.tar.gz \
 	&& rm binutils-${BINUTILS_VERSION}.tar.gz gcc-${GCC_VERSION}.tar.gz \
